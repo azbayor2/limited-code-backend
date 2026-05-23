@@ -1,0 +1,25 @@
+# docker compose for db
+
+
+services:
+
+  mysql:
+    image: mysql:8.4
+    container_name: mysql_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=staging
+      - TIMEZONE=Asia/Seoul
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
