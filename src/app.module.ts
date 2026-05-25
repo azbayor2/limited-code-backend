@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import config from './config/configuration';
+import { ValidatorModule } from './validator/validator.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -12,6 +14,8 @@ import config from './config/configuration';
       isGlobal: true,
     }),
     DatabaseModule,
+    ValidatorModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
