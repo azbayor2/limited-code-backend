@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModuleOptions } from '@nestjs/sequelize';
+import { User } from 'src/user/DAO/user.entity';
 
 export const sequelizeConfig = (
   configService: ConfigService,
@@ -10,6 +11,8 @@ export const sequelizeConfig = (
   username: configService.get('test.database.username'),
   password: configService.get('test.database.password'),
   database: configService.get('test.database.database'),
-  autoLoadModels: true,
+  // autoLoadModels: true,
   synchronize: false, // migration은 따로 관리
+  models: [User],
+  define: { timestamps: false },
 });
