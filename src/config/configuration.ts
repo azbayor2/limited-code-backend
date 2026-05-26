@@ -3,6 +3,12 @@
 const config = () => {
   return {
     port: parseInt(process.env.PORT || '3000', 10),
+
+    JWT: {
+      ACCESS_SECRETS: process.env.JWT_ACCESS_SECRETS ?? '123456789',
+      REFRESH_SECRETS: process.env.JWT_REFRESH_SECRETS ?? '987654321',
+    },
+
     test: {
       database: {
         host: process.env.DB_HOST ?? 'localhost',
