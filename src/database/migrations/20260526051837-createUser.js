@@ -10,46 +10,48 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     /** users 생성 */
+    const DataTypes = Sequelize.DataTypes;
     await queryInterface.createTable('users', {
       /** primary key: id */
       id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
+        autoIncrement: true,
       },
       /** username, unique */
       username: {
-        type: Sequelize.CHAR(255),
+        type: DataTypes.CHAR(255),
         unique: true,
         allowNull: false,
       },
       /** email, unique */
       email: {
-        type: Sequelize.CHAR(255),
+        type: DataTypes.CHAR(255),
         primaryKey: true,
         allowNull: false,
         unique: true,
       },
       /** createdAt */
       createdAt: {
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn('current'),
+        defaultValue: Sequelize.literal('current_timestamp'),
       },
       /** deletedAt */
       deletedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
+        type: DataTypes.DATE,
+        allowNull: true,
       },
       /** isAdmin */
       isAdmin: {
-        type: Sequelize.BOOLEAN,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
       /** password */
       password: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     });

@@ -9,6 +9,7 @@ import { HealthModule } from './health/health.module';
 import { CryptoModule } from './crypto/crypto.module';
 import { TestModule } from './test/test.module';
 import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 const isProd = process.env.NODE_ENV === 'production' || false;
 
@@ -19,6 +20,7 @@ const modules = [
   HealthModule,
   CryptoModule,
   AuthModule,
+  UserModule,
 ];
 
 /** test 환경에서만 활성화 할 모듈들만 추가 */

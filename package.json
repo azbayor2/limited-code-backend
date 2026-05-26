@@ -18,10 +18,13 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:gen": "sequelize-cli migration:generate --name",
-    "mig-all": "sequelize-cli db:migrate",
-    "mig-undo": "sequelize-cli db:migrate:undo",
-    "db-status": "sequelize-cli db:migrate:status"
+    "mig:gen": "sequelize-cli migration:generate --name",
+    "mig:mig": "sequelize-cli db:migrate",
+    "mig:undo": "sequelize-cli db:migrate:undo",
+    "db-status": "sequelize-cli db:migrate:status",
+    "seed:gen": "sequelize-cli seed:generate --name",
+    "seed:mig": "sequelize-cli db:seed:all",
+    "seed:undo": "sequelize-cli db:seed:undo"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -32,7 +35,7 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/sequelize": "^11.0.1",
     "@nestjs/swagger": "^11.4.4",
-    "@nestjs/terminus": "^11.1.1",
+    "@nestjs/terminus": "^9.1.2",
     "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
