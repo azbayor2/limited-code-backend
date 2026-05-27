@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './entity/user.entity';
 import { InjectModel } from '@nestjs/sequelize';
-import { FindUserArgs } from './user.type';
+import { FindUserArgs, CheckUserExists } from './user.dto';
+import { Op, WhereOptions } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -24,5 +25,21 @@ export class UserService {
         exclude: ['password'],
       },
     });
+  }
+
+  async check({ username, email }: CheckUserExists): Promise<boolean> {
+    if (!username && !email) return false;
+    const where: WhereOptions = [];
+
+    if (username) where.push({ username });
+    if (email) where.push({ email });
+
+    const result = await this.userRepository.count({
+      where: {
+        [Op.or]: [...where],
+      },
+    });
+
+    return result >= 0 ? true : false;
   }
 }

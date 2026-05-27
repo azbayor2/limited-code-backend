@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 
 export class CryptoService {
   private readonly saltRounds = 10;
@@ -14,5 +15,12 @@ export class CryptoService {
     hashedPassword: string,
   ): Promise<boolean> {
     return await bcrypt.compare(input, hashedPassword);
+  }
+
+  /** 인증번호 생성하기 */
+  generateVerificationCode(): string {
+    const code = crypto.randomInt(0, 1000000).toString().padStart(6, '0');
+
+    return code;
   }
 }
