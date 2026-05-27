@@ -14,9 +14,10 @@ module.exports = {
 
     const DataTypes = Sequelize.DataTypes;
 
+    /** users 테이블에 updatedAt 추가 */
     await queryInterface.addColumn('users', 'updatedAt', {
-      defaultValue: Sequelize.literal('current_timestamp'),
-      onUpdate: Sequelize.literal('current_timestamp'),
+      defaultValue: Sequelize.literal('current_timestamp'), // 기본값
+      onUpdate: Sequelize.literal('current_timestamp'), // 갱신 시 최신 시간으로 갱신
       type: DataTypes.DATE,
       allowNull: false,
     });
