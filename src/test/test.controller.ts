@@ -35,6 +35,6 @@ export class TestController {
   @ApiOperation({ summary: 'DB에 사용자가 조회되는지 테스트합니다.' })
   @Get('/userInfo')
   async getUser() {
-    return await this.userService.findById(1);
+    return await this.userService.find({ username: 'azbayor2' });
   }
 }

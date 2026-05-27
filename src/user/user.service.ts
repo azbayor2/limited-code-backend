@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './DAO/user.entity';
+import { User } from './entity/user.entity';
 import { InjectModel } from '@nestjs/sequelize';
+import { FindUserArgs } from './user.type';
 
 @Injectable()
 export class UserService {
@@ -8,10 +9,19 @@ export class UserService {
     @InjectModel(User) private readonly userRepository: typeof User,
   ) {}
 
-  async findById(id: number): Promise<User | null> {
+  async find({ id, email, username }: FindUserArgs): Promise<User | null> {
+    if (!id && !email && !username) return null;
+
+    const where: Partial<Pick<FindUserArgs, 'id' | 'email' | 'username'>> = {};
+
+    if (id) where.id = id;
+    if (email) where.email = email;
+    if (username) where.username = username;
+
     return await this.userRepository.findOne({
-      where: {
-        id,
+      where,
+      attributes: {
+        exclude: ['password'],
       },
     });
   }
