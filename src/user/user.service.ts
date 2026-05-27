@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './entity/user.entity';
+import { User } from './entity/User.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { FindUserArgs, CheckUserExists } from './user.dto';
 import { Op, WhereOptions } from 'sequelize';

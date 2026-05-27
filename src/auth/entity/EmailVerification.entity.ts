@@ -1,3 +1,4 @@
+import { DataTypes } from 'sequelize';
 import {
   Table,
   Column,
@@ -6,9 +7,12 @@ import {
   AutoIncrement,
   AllowNull,
   Default,
+  UpdatedAt,
+  CreatedAt,
+  DeletedAt,
 } from 'sequelize-typescript';
 
-@Table
+@Table({ tableName: 'emailVerifications' })
 export class EmailVerification extends Model {
   @AllowNull(false)
   @AutoIncrement
@@ -18,25 +22,30 @@ export class EmailVerification extends Model {
 
   @AllowNull(false)
   @Column
-  email: string;
+  declare email: string;
 
   @AllowNull(false)
   @Column
-  verificationCode: string;
+  declare verificationCode: string;
 
   @Default(false)
   @AllowNull(false)
   @Column
-  verified: boolean;
+  declare verified: boolean;
 
+  @CreatedAt
+  @Default(DataTypes.NOW)
   @AllowNull(false)
   @Column
   declare createdAt: Date;
 
+  @UpdatedAt
+  @Default(DataTypes.NOW)
   @AllowNull(false)
   @Column
   declare updatedAt: Date;
 
+  @DeletedAt
   @AllowNull(true)
   @Column
   declare deletedAt: Date;

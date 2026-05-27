@@ -3,7 +3,6 @@ import { EmailVerification } from './entity/EmailVerification.entity';
 import { EmailVerification as EmailVerificationDto } from './email.type';
 import { Email } from './email.type';
 import { CryptoService } from 'src/crypto/crypto.service';
-import { Sequelize } from 'sequelize';
 
 export class EmailVerificationService {
   constructor(
@@ -21,7 +20,7 @@ export class EmailVerificationService {
     /** 스케줄러 구현 후 스케줄러 삽입 확인 */
 
     const query = await this.emailVerificationRepository.create({
-      email,
+      email: email,
       verificationCode: code,
     });
 
@@ -39,11 +38,14 @@ export class EmailVerificationService {
       order: [['createdAt', 'desc']],
       limit: 1,
     });
-
     /** 예외 클래스 만들면 제대로 처리하기 */
-    if (!savedVerification) return false;
 
-    const savedCode = savedVerification?.verificationCode;
+    if (!savedVerification) {
+      return false;
+    }
+
+    console.log(savedVerification.verificationCode);
+    const savedCode = savedVerification.verificationCode;
 
     if (savedCode !== emailVerification.code) return false;
 
