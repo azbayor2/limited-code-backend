@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModuleOptions } from '@nestjs/sequelize';
-import { User } from 'src/user/DAO/user.entity';
+import { User } from 'src/user/entity/user.entity';
 
 export const sequelizeConfig = (
   configService: ConfigService,

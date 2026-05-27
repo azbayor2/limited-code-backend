@@ -10,6 +10,7 @@ import {
   AllowNull,
   AutoIncrement,
   Default,
+  Sequelize,
 } from 'sequelize-typescript';
 
 @Table({ tableName: 'users', timestamps: false })
@@ -45,4 +46,10 @@ export class User extends Model {
   @Unique
   @Column
   email: string;
+
+  @Default(Sequelize.literal('current_timestamp'))
+  @NotNull
+  @AllowNull(false)
+  @Column
+  declare updatedAt: Date;
 }
