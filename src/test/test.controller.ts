@@ -1,4 +1,16 @@
-import { Body, Controller, Post, Injectable, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Injectable,
+  Get,
+  Logger,
+  LoggerService,
+  Inject,
+  Response,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { CryptoService } from 'src/crypto/crypto.service';
 import { CryptoTestDto, JwtSignTestDto } from './test.dto';
 import { JWTCustomService } from 'src/auth/jwt.service';
@@ -8,6 +20,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 @Controller('/test')
 @ApiTags('test')
 export class TestController {
+  private logger = new Logger(TestController.name);
   constructor(
     private cryptoService: CryptoService,
     private jwtService: JWTCustomService,
@@ -36,5 +49,14 @@ export class TestController {
   @Get('/userInfo')
   async getUser() {
     return await this.userService.find({ username: 'azbayor2' });
+  }
+
+  @ApiOperation({ summary: '로깅이 제대로 되는지 확인합니다.' })
+  @Post('/log')
+  @HttpCode(HttpStatus.OK)
+  testLog() {
+    this.logger.error('hello world');
+
+    return { message: 'ok' };
   }
 }
