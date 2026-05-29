@@ -13,6 +13,7 @@ import { UserModule } from './user/user.module';
 import { BusinessException } from './exception/BusinessException.type';
 import { BusinessExceptionFilter } from './exception/BusinessException.filter';
 import { APP_FILTER } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
 
 const isProd = process.env.NODE_ENV === 'production' || false;
 
@@ -34,9 +35,11 @@ if (!isProd) {
 @Module({
   imports: [
     ConfigModule.forRoot({
+      // configuration
       load: [config],
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(), // scheduler
     ...modules,
   ],
   controllers: [AppController],
