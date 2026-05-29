@@ -16,6 +16,7 @@ import { CryptoTestDto, JwtSignTestDto } from './test.dto';
 import { JWTCustomService } from 'src/auth/jwt.service';
 import { UserService } from 'src/user/user.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { TestService } from './test.service';
 
 @Controller('/test')
 @ApiTags('test')
@@ -25,6 +26,7 @@ export class TestController {
     private cryptoService: CryptoService,
     private jwtService: JWTCustomService,
     private userService: UserService,
+    private testService: TestService,
   ) {}
 
   @Post('/crypto')
@@ -58,5 +60,13 @@ export class TestController {
     this.logger.error('hello world');
 
     return { message: 'ok' };
+  }
+
+  @ApiOperation({ summary: '예외가 잘 던져지는지 확인합니다.' })
+  @Post('/exception')
+  testException() {
+    this.testService.throwError();
+
+    return;
   }
 }

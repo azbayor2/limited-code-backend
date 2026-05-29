@@ -10,6 +10,9 @@ import { CryptoModule } from './crypto/crypto.module';
 import { TestModule } from './test/test.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { BusinessException } from './exception/BusinessException.type';
+import { BusinessExceptionFilter } from './exception/BusinessException.filter';
+import { APP_FILTER } from '@nestjs/core';
 
 const isProd = process.env.NODE_ENV === 'production' || false;
 
@@ -37,7 +40,13 @@ if (!isProd) {
     ...modules,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: BusinessExceptionFilter,
+    },
+  ],
   exports: [],
 })
 export class AppModule {}
