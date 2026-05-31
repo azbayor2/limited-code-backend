@@ -1,7 +1,7 @@
 import { Logger, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import config from './config/configuration';
 import { ValidatorModule } from './validator/validator.module';
@@ -14,6 +14,8 @@ import { BusinessException } from './exception/BusinessException.type';
 import { BusinessExceptionFilter } from './exception/BusinessException.filter';
 import { APP_FILTER } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { MailerConfigFactory, mailerOptions } from './mailer/mailer.config';
 
 const isProd = process.env.NODE_ENV === 'production' || false;
 
@@ -25,6 +27,7 @@ const modules = [
   CryptoModule,
   AuthModule,
   UserModule,
+  MailerModule,
 ];
 
 /** test 환경에서만 활성화 할 모듈들만 추가 */
@@ -40,6 +43,10 @@ if (!isProd) {
       isGlobal: true,
     }),
     ScheduleModule.forRoot(), // scheduler
+    MailerModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: MailerConfigFactory,
+    }),
     ...modules,
   ],
   controllers: [AppController],

@@ -2,14 +2,27 @@
 
 const config = () => {
   return {
+    /** 서버 포트 설정 */
     port: parseInt(process.env.PORT || '3000', 10),
 
+    /** JWT 토큰 설정 */
     JWT: {
       ACCESS_SECRETS: process.env.JWT_ACCESS_SECRETS ?? '123456789',
       REFRESH_SECRETS: process.env.JWT_REFRESH_SECRETS ?? '987654321',
     },
 
+    /** 이메일 설정 */
+    mailer: {
+      host: process.env.EMAIL_HOST ?? '',
+      port: parseInt(process.env.EMAIL_PORT ?? '') ?? 587,
+      user: process.env.EMAIL_USER ?? '',
+      pass: process.env.EMAIL_PASS ?? '',
+      email: process.env.EMAIL_ADDRESS ?? 'example@gmail.com',
+    },
+
+    /** 테스트 환경 설정 */
     test: {
+      /** 데이터베이스 설정 */
       database: {
         host: process.env.DB_HOST ?? 'localhost',
         port: parseInt(process.env.DB_PORT ?? '3306', 10),
