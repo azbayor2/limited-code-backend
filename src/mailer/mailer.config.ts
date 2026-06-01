@@ -12,17 +12,18 @@ export const MailerConfigFactory = (
       user: configService.get<string>('mailer.user'),
       pass: configService.get<string>('mailer.pass'),
     },
+  },
 
-    defaults: {
-      from: `"No Reply" <${configService.get<string>('mailer.email')}>`,
-    },
+  defaults: {
+    from: configService.get<string>('mailer.user'),
+    subject: `"No Reply" <${configService.get<string>('mailer.email')}>`,
+  },
 
-    template: {
-      dis: __dirname + 'email-templates',
-      adapter: new HandlebarsAdapter(),
-      options: {
-        strict: true,
-      },
+  template: {
+    dir: __dirname + '/mailer/email-templates',
+    adapter: new HandlebarsAdapter(),
+    options: {
+      strict: true,
     },
   },
 });

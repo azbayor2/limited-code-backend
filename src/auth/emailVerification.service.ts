@@ -3,29 +3,46 @@ import { EmailVerification } from './entity/EmailVerification.entity';
 import { EmailVerification as EmailVerificationDto } from './email.type';
 import { Email } from './email.type';
 import { CryptoService } from 'src/crypto/crypto.service';
+import { JobService } from 'src/job/job.service';
+import { Sequelize } from 'sequelize';
+import { Logger } from '@nestjs/common';
 
 export class EmailVerificationService {
   constructor(
     @InjectModel(EmailVerification)
     private readonly emailVerificationRepository: typeof EmailVerification,
     private readonly cryptoService: CryptoService,
+    private readonly jobService: JobService,
+    private readonly sequelize: Sequelize,
+    private readonly logger: Logger,
   ) {}
 
   /** 스케줄러에 이메일 전송 job을 푸시하고, 새로운 튜플을 만든다 */
   async sendCode({ email }: Email) {
     const code = this.cryptoService.generateVerificationCode();
 
-    /** 추후 스케줄러 구현 예정 */
+    const t = await this.sequelize.transaction();
 
-    /** 스케줄러 구현 후 스케줄러 삽입 확인 */
+    /** 이메일 인증번호 저장하기 */
+    const query = await this.emailVerificationRepository.create(
+      {
+        email: email,
+        verificationCode: code,
+      },
+      { transaction: t },
+    );
 
-    const query = await this.emailVerificationRepository.create({
-      email: email,
-      verificationCode: code,
-    });
+    /** 스케줄러에 작업 등록 */
+    await this.jobService.createEmailAuth(query, t);
 
-    if (query) return true;
-    return false;
+    try {
+      await t.commit();
+      return true;
+    } catch (e) {
+      await t.rollback();
+      this.logger.error('error');
+      return false;
+    }
   }
 
   /** 인증번호 검증하기 */

@@ -7,6 +7,8 @@ const common = {
   host: process.env.DB_HOST || 'localhost',
   port: Number(process.env.DB_PORT) || 3306,
   dialect: 'mysql',
+  seederStorage: 'sequelize',
+  seederStorageTableName: 'SequelizeData', // 시드 설정
 };
 
 module.exports = {

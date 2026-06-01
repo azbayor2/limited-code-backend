@@ -37,16 +37,23 @@ if (!isProd) {
 
 @Module({
   imports: [
+    /** 전역 변수 설정 */
     ConfigModule.forRoot({
       // configuration
       load: [config],
       isGlobal: true,
     }),
-    ScheduleModule.forRoot(), // scheduler
+
+    /** scheduler */
+    ScheduleModule.forRoot(),
+
+    /** node mailer */
     MailerModule.forRootAsync({
       inject: [ConfigService],
       useFactory: MailerConfigFactory,
     }),
+
+    /** 나머지 모듈 */
     ...modules,
   ],
   controllers: [AppController],
