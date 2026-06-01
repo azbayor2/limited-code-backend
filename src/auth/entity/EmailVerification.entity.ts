@@ -49,4 +49,9 @@ export class EmailVerification extends Model {
   @AllowNull(true)
   @Column
   declare deletedAt: Date;
+
+  @Default(false)
+  @AllowNull(false)
+  @Column
+  declare sent: boolean;
 }
