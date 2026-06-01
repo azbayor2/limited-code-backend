@@ -7,15 +7,17 @@ import { EmailVerification } from './entity/EmailVerification.entity';
 import { EmailVerificationService } from './emailVerification.service';
 import { CryptoModule } from 'src/crypto/crypto.module';
 import { EmailVerificationController } from './emailVerification.controller';
+import { JobModule } from 'src/job/job.module';
 
 @Module({
   imports: [
     JwtModule.register({}),
     SequelizeModule.forFeature([User, EmailVerification]),
     CryptoModule,
+    JobModule,
   ],
   providers: [JWTCustomService, EmailVerificationService],
-  exports: [JWTCustomService],
+  exports: [JWTCustomService, EmailVerificationService],
   controllers: [EmailVerificationController],
 })
 export class AuthModule {}

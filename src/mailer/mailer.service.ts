@@ -5,20 +5,21 @@ import { SendEmailMeta } from 'src/job/meta.type';
 import { ISendMailOptions } from '@nestjs-modules/mailer';
 import { Sequelize } from 'sequelize-typescript';
 import { EmailVerification } from 'src/auth/entity/EmailVerification.entity';
-import { Logger } from 'winston';
+import { Logger } from '@nestjs/common';
 import {
   BusinessErrorCode,
   BusinessException,
 } from 'src/exception/BusinessException.type';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class MailerService {
+  private readonly logger = new Logger('MailerService');
   constructor(
     private readonly mailerService: MailerBatchService,
     private readonly sequelize: Sequelize,
-    @Inject(EmailVerification)
+    @InjectModel(EmailVerification)
     private readonly emailVerificationRepo: typeof EmailVerification,
-    private readonly logger: Logger,
   ) {}
 
   async bulkSendEmail(toSend: Job[]) {

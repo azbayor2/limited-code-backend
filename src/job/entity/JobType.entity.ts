@@ -12,7 +12,7 @@ import {
 } from 'sequelize-typescript';
 import { Job } from './Job.entity';
 
-@Table({ tableName: 'jobTypes' })
+@Table({ tableName: 'jobTypes', timestamps: false })
 export class JobType extends Model {
   @PrimaryKey
   @AutoIncrement

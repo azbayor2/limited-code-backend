@@ -10,14 +10,15 @@ import {
 import { SendEmailMeta } from './meta.type';
 import { JobTypeEnum } from './job.type';
 import { MailerService } from '../mailer/mailer.service';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class JobService {
   private readonly logger = new Logger('JobService');
   constructor(
-    @Inject(Job) private readonly jobRepository: typeof Job,
-    @Inject(JobType) private readonly jobTypeRepository: typeof JobType,
-    private readonly mailerService: MailerService,
+    @InjectModel(Job) private readonly jobRepository: typeof Job,
+    @InjectModel(JobType) private readonly jobTypeRepository: typeof JobType,
+    @Inject(MailerService) private readonly mailerService: MailerService,
   ) {}
 
   /** 작업별로 처리할 것들을 함수로 정의 후 스케줄러 서비스에 등록하기 */

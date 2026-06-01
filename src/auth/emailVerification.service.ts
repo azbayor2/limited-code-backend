@@ -4,17 +4,18 @@ import { EmailVerification as EmailVerificationDto } from './email.type';
 import { Email } from './email.type';
 import { CryptoService } from 'src/crypto/crypto.service';
 import { JobService } from 'src/job/job.service';
-import { Sequelize } from 'sequelize';
-import { Logger } from '@nestjs/common';
+import { Sequelize } from 'sequelize-typescript';
+import { Injectable, Logger } from '@nestjs/common';
 
+@Injectable()
 export class EmailVerificationService {
+  private readonly logger = new Logger('EmailVerificationService');
   constructor(
     @InjectModel(EmailVerification)
     private readonly emailVerificationRepository: typeof EmailVerification,
     private readonly cryptoService: CryptoService,
     private readonly jobService: JobService,
     private readonly sequelize: Sequelize,
-    private readonly logger: Logger,
   ) {}
 
   /** 스케줄러에 이메일 전송 job을 푸시하고, 새로운 튜플을 만든다 */
