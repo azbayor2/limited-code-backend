@@ -28,7 +28,7 @@ jobs:
           cache: 'npm' # Automatically caches dependency folders
 
       - name: install dependencies
-        run: npm install
+        run: npm ci
 
       # Step 4: Execute code analysis or formatting checks
       - name: Run Linter
