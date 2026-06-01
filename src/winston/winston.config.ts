@@ -1,7 +1,7 @@
 import { createLogger, format, transports } from 'winston';
 import ecsFormat from '@elastic/ecs-winston-format';
 import { ConsoleTransportOptions } from 'winston/lib/winston/transports';
-import { utilities, WinstonModule } from 'nest-winston';
+import { utilities } from 'nest-winston';
 
 /** Production: ECS Format */
 const ECS_FORMAT: ConsoleTransportOptions = {

@@ -41,7 +41,7 @@ export class EmailVerificationService {
       return true;
     } catch (e) {
       await t.rollback();
-      this.logger.error('error');
+      this.logger.error('error', e);
       return false;
     }
   }

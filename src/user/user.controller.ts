@@ -1,6 +1,6 @@
 import { Controller, Query, Get } from '@nestjs/common';
-import { User } from './entity/User.entity';
-import { EmailVerification } from 'src/auth/entity/EmailVerification.entity';
+// import { User } from './entity/User.entity';
+// import { EmailVerification } from 'src/auth/entity/EmailVerification.entity';
 import { UserService } from './user.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CheckUserExists, FindUserArgs } from './user.dto';

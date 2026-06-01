@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { MailerBatchService } from '@nestjs-modules/mailer';
 import { Job } from 'src/job/entity/Job.entity';
 import { SendEmailMeta } from 'src/job/meta.type';

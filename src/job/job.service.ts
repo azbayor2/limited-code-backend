@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Job } from './entity/Job.entity';
 import { JobType } from './entity/JobType.entity';
 import { EmailVerification } from 'src/auth/entity/EmailVerification.entity';
-import { Sequelize, Transaction } from 'sequelize';
+import { Transaction } from 'sequelize';
 import {
   BusinessErrorCode,
   BusinessException,
