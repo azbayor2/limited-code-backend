@@ -4,6 +4,8 @@ export enum BusinessErrorCode {
   EMAIL_SENT_FAILED = 'email sent failed',
   EMAIL_VERIFICATION_DATA_NOT_FOUND = 'entity of emailVerification not found',
   EMAIL_AUTH_EXPIRED = 'email authentication code expired',
+  EMAIL_NOT_VERIFIED = 'email is not authenticated',
+  USER_ALREADY_EXISTS = 'user already exists',
 }
 
 /** 여기에 각 에러코드에 맞는 세부 정보 맵핑 (status, message) */
@@ -26,8 +28,18 @@ export const BusinessErrorRegistry: Record<
   },
 
   [BusinessErrorCode.EMAIL_AUTH_EXPIRED]: {
-    status: 2,
+    status: 3,
     message: 'email authentication expired',
+  },
+
+  [BusinessErrorCode.EMAIL_NOT_VERIFIED]: {
+    status: 4,
+    message: 'email is not authenticated',
+  },
+
+  [BusinessErrorCode.USER_ALREADY_EXISTS]: {
+    status: 5,
+    message: 'user already exists',
   },
 };
 
