@@ -11,7 +11,6 @@ import {
   BusinessException,
 } from 'src/exception/BusinessException.type';
 import { InjectModel } from '@nestjs/sequelize';
-import { SentMessageInfo } from 'nodemailer';
 
 @Injectable()
 export class MailerService {
@@ -43,10 +42,9 @@ export class MailerService {
 
     /** 각 result 별로 성공, 실패 나누고, transaction을 생성하고, 배치로 처리하기 (알고리즘 생각)*/
 
-    await Promise.all(
+    await Promise.allSettled(
       result.map(async (r) => {
         const t = await this.sequelize.transaction();
-        console.log(r);
 
         const index = r.index;
 
@@ -61,7 +59,7 @@ export class MailerService {
               'The job related to Email not found',
             );
 
-          /** 나중에 emailVerification에 전송되었는지 여부를 저장하는 필드 추가하기 */
+          /** Job에 저장되어 있는 메타 데이터 추출 */
           const meta = j.meta as SendEmailMeta;
 
           /** 성공했으면 */
@@ -86,6 +84,10 @@ export class MailerService {
           } else {
             /** 실패했으면 */
             j.status = 'FAILED';
+            this.logger.error(
+              BusinessErrorCode.UNKNOWN_ERROR,
+              'EmailVerificaion, Job 업데이트 실패',
+            );
             await j.save({ transaction: t });
           }
 
