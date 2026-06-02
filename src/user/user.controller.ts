@@ -1,9 +1,9 @@
-import { Controller, Query, Get } from '@nestjs/common';
+import { Controller, Query, Get, Post, Body } from '@nestjs/common';
 // import { User } from './entity/User.entity';
 // import { EmailVerification } from 'src/auth/entity/EmailVerification.entity';
 import { UserService } from './user.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CheckUserExists, FindUserArgs } from './user.dto';
+import { CheckUserExists, FindUserArgs, RegisterUserDto } from './user.dto';
 
 @ApiTags('users')
 @Controller('/user')
@@ -30,5 +30,13 @@ export class UserController {
   @Get('/')
   async get(@Query() findUserArgs: FindUserArgs) {
     return this.userService.find(findUserArgs);
+  }
+
+  @ApiOperation({
+    description: '회원가입을 진행합니다',
+  })
+  @Post('/register')
+  async register(@Body() registerUserDto: RegisterUserDto) {
+    return await this.userService.register(registerUserDto);
   }
 }

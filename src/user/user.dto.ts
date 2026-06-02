@@ -51,3 +51,38 @@ export class CheckUserExists {
   @IsOptional()
   username?: string;
 }
+
+export class RegisterUserDto {
+  @ApiProperty({
+    example: 'example@gmail.com',
+    description: '회원을 가입할 이메일을 입력합니다',
+    required: true,
+  })
+  @IsString()
+  email: string;
+
+  @ApiProperty({
+    example: '123456789',
+    description: '비밀번호를 입력합니다',
+    required: true,
+  })
+  @IsString()
+  password: string;
+
+  @ApiProperty({
+    example: 1,
+    description: '관련 emailVerificationId를 입력합니다',
+    required: true,
+  })
+  @IsNumber()
+  @Type(() => Number)
+  emailVerificationId: number;
+
+  @ApiProperty({
+    example: 'username',
+    description: '아이디를 입력합니다.',
+    required: true,
+  })
+  @IsString()
+  username: string;
+}
