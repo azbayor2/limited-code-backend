@@ -6,7 +6,7 @@ import { JobService } from 'src/job/job.service';
 export class SchedulerService {
   constructor(private readonly jobService: JobService) {}
 
-  @Cron('0 * * * * *')
+  @Cron('0,15,30,45 * * * * *')
   async handleCron() {
     /** 이메일 인증번호를 보낼것이 있는지 확인. */
     await this.jobService.handleEmail();

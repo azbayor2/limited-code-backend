@@ -13,11 +13,11 @@ const config = () => {
 
     /** 이메일 설정 */
     mailer: {
-      host: process.env.EMAIL_HOST ?? '',
-      port: parseInt(process.env.EMAIL_PORT ?? '') ?? 587,
       user: process.env.EMAIL_USER ?? '',
       pass: process.env.EMAIL_PASS ?? '',
-      email: process.env.EMAIL_ADDRESS ?? 'example@gmail.com',
+      clientId: process.env.EMAIL_CLIENT_ID ?? '',
+      clientSecret: process.env.EMAIL_CLIENT_SECRET ?? '',
+      refreshToken: process.env.EMAIL_REFRESH_TOKEN ?? '',
     },
 
     /** 테스트 환경 설정 */

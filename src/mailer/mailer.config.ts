@@ -6,11 +6,13 @@ export const MailerConfigFactory = (
   configService: ConfigService,
 ): MailerOptions => ({
   transport: {
-    host: configService.get<string>('mailer.host'),
-    port: configService.get<number>('mailer.port'),
+    service: 'gmail',
     auth: {
+      type: 'OAuth2',
       user: configService.get<string>('mailer.user'),
-      pass: configService.get<string>('mailer.pass'),
+      clientId: configService.get<string>('mailer.clientId'),
+      clientSecret: configService.get<string>('mailer.clientSecret'),
+      refreshToken: configService.get<string>('mailer.refreshToken'),
     },
   },
 
@@ -20,7 +22,7 @@ export const MailerConfigFactory = (
   },
 
   template: {
-    dir: __dirname + '/mailer/email-templates',
+    dir: __dirname + '/email-templates',
     adapter: new HandlebarsAdapter(),
     options: {
       strict: true,

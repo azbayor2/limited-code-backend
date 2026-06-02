@@ -11,6 +11,7 @@ import {
   BusinessException,
 } from 'src/exception/BusinessException.type';
 import { InjectModel } from '@nestjs/sequelize';
+import { SentMessageInfo } from 'nodemailer';
 
 @Injectable()
 export class MailerService {
@@ -30,7 +31,7 @@ export class MailerService {
         return {
           to: meta.email,
           subject: '인증번호 입니다',
-          template: 'emailAuthTemplate',
+          template: 'emailAuthTemplate2',
           context: {
             authenticationCode: meta.code,
           },
@@ -45,20 +46,20 @@ export class MailerService {
     await Promise.all(
       result.map(async (r) => {
         const t = await this.sequelize.transaction();
+        console.log(r);
 
-        const sent = r.result as ISendMailOptions;
-        const to = sent.to;
+        const index = r.index;
 
         /** 해당 Job을 찾기 */
-        const j = toSend.find((send) => {
-          const meta = send.meta as SendEmailMeta;
-          return meta.email === to;
-        });
+        const j = toSend[index];
 
         /** 임시, 머지하기 전에 로깅 클래스 수정하기 */
         try {
           if (!j)
-            throw new BusinessException(BusinessErrorCode.EMAIL_SENT_FAILED);
+            throw new BusinessException(
+              BusinessErrorCode.UNKNOWN_ERROR,
+              'The job related to Email not found',
+            );
 
           /** 나중에 emailVerification에 전송되었는지 여부를 저장하는 필드 추가하기 */
           const meta = j.meta as SendEmailMeta;
@@ -94,8 +95,6 @@ export class MailerService {
           if (e instanceof BusinessException)
             this.logger.log(e.message, e.stack);
         }
-
-        return t.commit();
       }),
     );
   }

@@ -21,4 +21,5 @@ export const sequelizeConfig = (
   synchronize: false, // migration은 따로 관리
   models,
   define: { timestamps: false },
+  logging: false,
 });

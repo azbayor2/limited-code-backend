@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Job } from './entity/Job.entity';
 import { JobType } from './entity/JobType.entity';
 import { EmailVerification } from 'src/auth/entity/EmailVerification.entity';
-import { Transaction } from 'sequelize';
+import { Op, Transaction } from 'sequelize';
 import {
   BusinessErrorCode,
   BusinessException,
@@ -27,7 +27,7 @@ export class JobService {
   async handleEmail() {
     const { rows, count } = await this.jobRepository.findAndCountAll({
       where: {
-        status: 'PENDING',
+        status: { [Op.or]: ['PENDING', 'FAILED'] },
       },
       include: [
         {
