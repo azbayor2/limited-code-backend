@@ -18,7 +18,7 @@ export class BusinessExceptionFilter extends BaseExceptionFilter {
 
       /** 최후의 수단, 비권장 */
       default:
-        this.logger.error('Undefined Error');
+        this.logger.error(exception.message, exception.stack);
 
         super.catch(
           new HttpException('unknown error', HttpStatus.INTERNAL_SERVER_ERROR),

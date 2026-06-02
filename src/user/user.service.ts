@@ -82,13 +82,12 @@ export class UserService {
     const hashed = await this.cryptoService.hashPassword(user.password);
 
     /** 사용자 생성하기 */
-
-    const registeredUser = await this.userRepository.create({
+    await this.userRepository.create({
       username: user.username,
       email: user.email,
       password: hashed,
     });
 
-    return registeredUser;
+    return { status: true };
   }
 }
