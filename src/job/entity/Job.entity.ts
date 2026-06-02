@@ -10,6 +10,7 @@ import {
   Model,
   PrimaryKey,
   Table,
+  DataType,
 } from 'sequelize-typescript';
 import { JobType } from './JobType.entity';
 
@@ -27,8 +28,8 @@ export class Job extends Model {
   declare jobTypeId: number;
 
   @AllowNull(true)
-  @Column
-  declare meta: object;
+  @Column({ type: DataType.JSON })
+  declare meta: Record<string, any>;
 
   @Default('PENDING')
   @AllowNull(false)

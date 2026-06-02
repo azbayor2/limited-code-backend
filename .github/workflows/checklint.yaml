@@ -1,0 +1,35 @@
+# Name of the workflow visible in the GitHub Actions tab
+name: Lint Checker
+
+# Define the triggers that start the automation
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: ['main']
+  workflow_dispatch: # Allows manual execution from the GitHub UI
+
+# Define the execution blocks
+jobs:
+  check-lint:
+    # Operating system type for the virtual environment runner
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download repository source code onto the runner
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Provision the execution environment (Example: Node.js)
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm' # Automatically caches dependency folders
+
+      - name: install dependencies
+        run: npm ci
+
+      # Step 4: Execute code analysis or formatting checks
+      - name: Run Linter
+        run: npm run lint

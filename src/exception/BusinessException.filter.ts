@@ -5,7 +5,7 @@ import {
   HttpException,
   ArgumentsHost,
 } from '@nestjs/common';
-import { BaseExceptionFilter, HttpAdapterHost } from '@nestjs/core';
+import { BaseExceptionFilter } from '@nestjs/core';
 import { BusinessException } from './BusinessException.type';
 
 @Catch(BusinessException)
