@@ -1,4 +1,4 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 import {
   Table,
   Column,
@@ -54,4 +54,10 @@ export class EmailVerification extends Model {
   @AllowNull(false)
   @Column
   declare sent: boolean;
+
+  @AllowNull(false)
+  @Column({
+    defaultValue: Sequelize.literal('(current_timestamp + interval 10 minute)'),
+  })
+  declare expiredAt: Date;
 }

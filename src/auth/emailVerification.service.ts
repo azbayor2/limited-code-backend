@@ -6,6 +6,7 @@ import { CryptoService } from 'src/crypto/crypto.service';
 import { JobService } from 'src/job/job.service';
 import { Sequelize } from 'sequelize-typescript';
 import { Injectable, Logger } from '@nestjs/common';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class EmailVerificationService {
@@ -52,6 +53,9 @@ export class EmailVerificationService {
       where: {
         email: emailVerification.email,
         verified: false,
+        expiredAt: {
+          [Op.gte]: Sequelize.literal('now()'),
+        },
       },
       order: [['createdAt', 'desc']],
       limit: 1,
@@ -62,7 +66,6 @@ export class EmailVerificationService {
       return false;
     }
 
-    console.log(savedVerification.verificationCode);
     const savedCode = savedVerification.verificationCode;
 
     if (savedCode !== emailVerification.code) return false;
