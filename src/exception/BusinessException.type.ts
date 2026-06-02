@@ -3,6 +3,7 @@ export enum BusinessErrorCode {
   UNKNOWN_ERROR = 'unknown error',
   EMAIL_SENT_FAILED = 'email sent failed',
   EMAIL_VERIFICATION_DATA_NOT_FOUND = 'entity of emailVerification not found',
+  EMAIL_AUTH_EXPIRED = 'email authentication code expired',
 }
 
 /** 여기에 각 에러코드에 맞는 세부 정보 맵핑 (status, message) */
@@ -22,6 +23,11 @@ export const BusinessErrorRegistry: Record<
   [BusinessErrorCode.EMAIL_VERIFICATION_DATA_NOT_FOUND]: {
     status: 2,
     message: 'data of EmailVerification is not found',
+  },
+
+  [BusinessErrorCode.EMAIL_AUTH_EXPIRED]: {
+    status: 2,
+    message: 'email authentication expired',
   },
 };
 

@@ -1,12 +1,17 @@
 import { InjectModel } from '@nestjs/sequelize';
 import { EmailVerification } from './entity/EmailVerification.entity';
 import { EmailVerification as EmailVerificationDto } from './email.type';
+import { EmailVerifyReturnDto } from './email.dto';
 import { Email } from './email.type';
 import { CryptoService } from 'src/crypto/crypto.service';
 import { JobService } from 'src/job/job.service';
 import { Sequelize } from 'sequelize-typescript';
 import { Injectable, Logger } from '@nestjs/common';
 import { Op } from 'sequelize';
+import {
+  BusinessErrorCode,
+  BusinessException,
+} from 'src/exception/BusinessException.type';
 
 @Injectable()
 export class EmailVerificationService {
@@ -48,7 +53,9 @@ export class EmailVerificationService {
   }
 
   /** 인증번호 검증하기 */
-  async verifyCode(emailVerification: EmailVerificationDto) {
+  async verifyCode(
+    emailVerification: EmailVerificationDto,
+  ): Promise<EmailVerifyReturnDto> {
     const savedVerification = await this.emailVerificationRepository.findOne({
       where: {
         email: emailVerification.email,
@@ -63,17 +70,21 @@ export class EmailVerificationService {
     /** 예외 클래스 만들면 제대로 처리하기 */
 
     if (!savedVerification) {
-      return false;
+      throw new BusinessException(BusinessErrorCode.EMAIL_AUTH_EXPIRED);
     }
 
     const savedCode = savedVerification.verificationCode;
 
-    if (savedCode !== emailVerification.code) return false;
+    if (savedCode !== emailVerification.code)
+      return { status: false } as EmailVerifyReturnDto;
 
     /** 인증이 되었으므로 verified = true 로 설정 */
     savedVerification.verified = true;
     await savedVerification.save();
 
-    return true;
+    return {
+      status: true,
+      emailVerificationId: savedVerification.id,
+    };
   }
 }
