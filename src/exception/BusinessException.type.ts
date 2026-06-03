@@ -6,6 +6,8 @@ export enum BusinessErrorCode {
   EMAIL_AUTH_EXPIRED = 'email authentication code expired',
   EMAIL_NOT_VERIFIED = 'email is not authenticated',
   USER_ALREADY_EXISTS = 'user already exists',
+  USER_NOT_FOUND = 'user not found',
+  WRONG_PASSPORD = 'wrong password',
 }
 
 /** 여기에 각 에러코드에 맞는 세부 정보 맵핑 (status, message) */
@@ -40,6 +42,14 @@ export const BusinessErrorRegistry: Record<
   [BusinessErrorCode.USER_ALREADY_EXISTS]: {
     status: 5,
     message: 'user already exists',
+  },
+  [BusinessErrorCode.USER_NOT_FOUND]: {
+    status: 6,
+    message: 'user not found',
+  },
+  [BusinessErrorCode.WRONG_PASSPORD]: {
+    status: 7,
+    message: 'wrong password',
   },
 };
 

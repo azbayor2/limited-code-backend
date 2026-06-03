@@ -1,8 +1,8 @@
 import { InjectModel } from '@nestjs/sequelize';
 import { EmailVerification } from './entity/EmailVerification.entity';
-import { EmailVerification as EmailVerificationDto } from './email.type';
-import { EmailVerifyReturnDto } from './email.dto';
-import { Email } from './email.type';
+import { EmailVerification as EmailVerificationDto } from './auth.type';
+import { EmailVerifyReturnDto } from './auth.dto';
+import { Email } from './auth.type';
 import { CryptoService } from 'src/crypto/crypto.service';
 import { JobService } from 'src/job/job.service';
 import { Sequelize } from 'sequelize-typescript';

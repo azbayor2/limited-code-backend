@@ -19,7 +19,12 @@ export class UserService {
     private readonly cryptoService: CryptoService,
   ) {}
 
-  async find({ id, email, username }: FindUserArgs): Promise<User | null> {
+  async find(
+    { id, email, username }: FindUserArgs,
+    options: {
+      excludePassword: boolean;
+    } = { excludePassword: true },
+  ): Promise<User | null> {
     if (!id && !email && !username) return null;
 
     const where: Partial<Pick<FindUserArgs, 'id' | 'email' | 'username'>> = {};
@@ -28,11 +33,12 @@ export class UserService {
     if (email) where.email = email;
     if (username) where.username = username;
 
+    const attributes: { exclude: string[] } = { exclude: [] };
+    if (options.excludePassword) attributes.exclude.push('password');
+
     return await this.userRepository.findOne({
       where,
-      attributes: {
-        exclude: ['password'],
-      },
+      attributes,
     });
   }
 
@@ -49,7 +55,7 @@ export class UserService {
       },
     });
 
-    return result >= 0 ? true : false;
+    return result > 0 ? true : false;
   }
 
   async register(user: RegisterUserDto) {

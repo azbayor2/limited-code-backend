@@ -11,7 +11,7 @@ const swaggerConfig = (app: INestApplication): void => {
 
   const document = SwaggerModule.createDocument(app, options);
 
-  SwaggerModule.setup('swagger', app, document);
+  SwaggerModule.setup('swagger', app, document, { useGlobalPrefix: true });
 };
 
 export default swaggerConfig;
