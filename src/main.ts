@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import swaggerConfig from './config/swagger.config';
 import { WinstonModule } from 'nest-winston';
 import { winstonLoggerInstance } from './winston/winston.config';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -11,10 +12,14 @@ async function bootstrap() {
     logger: WinstonModule.createLogger({ instance: winstonLoggerInstance }),
   });
 
+  app.setGlobalPrefix('/api');
+
   const configService = app.get(ConfigService);
   const port = configService.get<number>('port') || 3000;
 
   swaggerConfig(app);
+
+  app.use(cookieParser());
 
   await app.listen(port, () => {
     console.log(`listening on port ${port}`);

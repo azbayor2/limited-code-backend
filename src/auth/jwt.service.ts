@@ -19,7 +19,7 @@ export class JWTCustomService {
     this.JWT_REFRESH_SECRETS =
       this.configService.get<string>('JWT.REFRESH_SECRETS') || '';
     this.accessTokenExpiration = '1H';
-    this.refreshTokenExpiration = '1H';
+    this.refreshTokenExpiration = '7D';
   }
   /** access 토큰을 생성함. */
   async signAccessToken(id: number, username: string) {

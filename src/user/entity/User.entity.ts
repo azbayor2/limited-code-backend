@@ -22,10 +22,10 @@ export class User extends Model {
 
   @Unique
   @Column
-  username: string;
+  declare username: string;
 
   @Column
-  password: string;
+  declare password: string;
 
   @Column
   @CreatedAt
@@ -40,12 +40,12 @@ export class User extends Model {
   @NotNull
   @AllowNull(false)
   @Column
-  isAdmin: boolean;
+  declare isAdmin: boolean;
 
   @Column
   @Unique
   @Column
-  email: string;
+  declare email: string;
 
   @Default(Sequelize.literal('current_timestamp'))
   @NotNull

@@ -8,6 +8,9 @@ import { EmailVerificationService } from './emailVerification.service';
 import { CryptoModule } from 'src/crypto/crypto.module';
 import { EmailVerificationController } from './emailVerification.controller';
 import { JobModule } from 'src/job/job.module';
+import { LoginController } from './login.controller';
+import { LoginService } from './login.service';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
@@ -15,9 +18,10 @@ import { JobModule } from 'src/job/job.module';
     SequelizeModule.forFeature([User, EmailVerification]),
     CryptoModule,
     JobModule,
+    UserModule,
   ],
-  providers: [JWTCustomService, EmailVerificationService],
+  providers: [JWTCustomService, EmailVerificationService, LoginService],
   exports: [JWTCustomService, EmailVerificationService],
-  controllers: [EmailVerificationController],
+  controllers: [EmailVerificationController, LoginController],
 })
 export class AuthModule {}

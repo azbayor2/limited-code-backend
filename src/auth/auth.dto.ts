@@ -44,3 +44,21 @@ export class EmailVerifyReturnDto {
   })
   status: boolean;
 }
+
+export class LoginDto {
+  @ApiProperty({
+    example: 'username',
+    description: '아이디를 입력합니다',
+    required: true,
+  })
+  @IsString()
+  username: string;
+
+  @ApiProperty({
+    example: 'password',
+    description: '비밀번호를 입력합니다',
+    required: true,
+  })
+  @IsString()
+  password: string;
+}

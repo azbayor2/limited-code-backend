@@ -4,9 +4,11 @@ import {
   Logger,
   HttpException,
   ArgumentsHost,
+  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
-import { BusinessException } from './BusinessException.type';
+import { BusinessErrorCode, BusinessException } from './BusinessException.type';
 
 @Catch(BusinessException)
 export class BusinessExceptionFilter extends BaseExceptionFilter {
@@ -15,6 +17,15 @@ export class BusinessExceptionFilter extends BaseExceptionFilter {
   catch(exception: BusinessException, host: ArgumentsHost) {
     switch (exception.errorCode) {
       /** 안에 BusinessException 별로 로깅하고, 상황에 맞는 HttpException을 던진다 */
+      case BusinessErrorCode.WRONG_PASSPORD:
+        // super.catch(new UnauthorizedException('cannot authorize'), host);
+        throw new UnauthorizedException('cannot authorize');
+        break;
+
+      case BusinessErrorCode.USER_NOT_FOUND:
+        throw new NotFoundException('user not found');
+        // super.catch(new NotFoundException('user not found'), host);
+        break;
 
       /** 최후의 수단, 비권장 */
       default:

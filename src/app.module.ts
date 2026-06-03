@@ -18,6 +18,7 @@ import { MailerConfigFactory } from './mailer/mailer.config';
 import { JobModule } from './job/job.module';
 import { SchedulerModule } from './scheduler/scheduler.module';
 import { MailerModule as CustomMailerModule } from './mailer/mailer.module';
+import CustomPassportModule from './passport/passport.module';
 
 const isProd = process.env.NODE_ENV === 'production' || false;
 
@@ -33,6 +34,7 @@ const modules = [
   JobModule,
   SchedulerModule,
   CustomMailerModule,
+  CustomPassportModule,
 ];
 
 /** test 환경에서만 활성화 할 모듈들만 추가 */
