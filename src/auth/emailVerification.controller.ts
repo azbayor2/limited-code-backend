@@ -1,7 +1,12 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { EmailVerificationService } from './emailVerification.service';
-import { EmailDto, EmailVerifyDto, EmailVerifyReturnDto } from './auth.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  EmailDto,
+  EmailReturnDto,
+  EmailVerifyDto,
+  EmailVerifyReturnDto,
+} from './auth.dto';
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('auths')
 @Controller('/auth')
@@ -13,16 +18,20 @@ export class EmailVerificationController {
   @ApiOperation({
     description: '이메일 인증번호를 전송합니다',
   })
+  @ApiCreatedResponse({
+    description: '이메일이 전송됐을 때 응답을 반환합니다',
+    type: EmailReturnDto,
+  })
   @Post('/send')
-  async sendCode(@Body() emailDto: EmailDto) {
+  async sendCode(@Body() emailDto: EmailDto): Promise<EmailReturnDto> {
     return {
-      message: (await this.emailVerificationService.sendCode(emailDto))
+      success: (await this.emailVerificationService.sendCode(emailDto))
         ? true
         : false,
     };
   }
 
-  @ApiResponse({
+  @ApiCreatedResponse({
     description: '반환 형식',
     type: EmailVerifyReturnDto,
   })

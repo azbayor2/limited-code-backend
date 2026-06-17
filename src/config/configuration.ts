@@ -11,6 +11,8 @@ const config = () => {
       REFRESH_SECRETS: process.env.JWT_REFRESH_SECRETS ?? '987654321',
     },
 
+    origins: [process.env.FRONTEND_URL],
+
     /** 이메일 설정 */
     mailer: {
       user: process.env.EMAIL_USER ?? '',

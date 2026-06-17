@@ -20,6 +20,11 @@ async function bootstrap() {
   swaggerConfig(app);
 
   app.use(cookieParser());
+  app.enableCors({
+    origin: configService.get<[]>('origins'),
+    credentials: true,
+    exposedHeaders: ['Authorization'],
+  });
 
   await app.listen(port, () => {
     console.log(`listening on port ${port}`);

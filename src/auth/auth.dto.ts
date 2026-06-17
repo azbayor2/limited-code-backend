@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
+/** sendVerificationCode */
 export class EmailDto {
   @ApiProperty({
     example: 'example@gmail.com',
@@ -11,6 +12,15 @@ export class EmailDto {
   email: string;
 }
 
+export class EmailReturnDto {
+  @ApiProperty({
+    example: true,
+    description: '이메일이 전송됐으면 true 를 반환합니다.',
+  })
+  success: boolean;
+}
+
+/** check email verification code */
 export class EmailVerifyDto {
   @ApiProperty({
     example: 'example@gmail.com',
