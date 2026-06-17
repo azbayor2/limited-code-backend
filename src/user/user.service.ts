@@ -94,6 +94,6 @@ export class UserService {
       password: hashed,
     });
 
-    return { status: true };
+    return true;
   }
 }
