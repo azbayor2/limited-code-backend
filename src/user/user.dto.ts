@@ -30,7 +30,7 @@ export class FindUserArgs {
   })
   @IsString()
   @IsOptional()
-  username?: string | undefined;
+  username?: string;
 }
 
 export class UserResponseInfo {
